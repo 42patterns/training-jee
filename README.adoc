@@ -1,0 +1,19 @@
+= Java EE trainings snippets and exercises
+
+This project contains sample projects for Java EE trainings
+
+jee6-example::
+Basic whole stack example: from database to a REST webservice endpoint
+
+exercises::
+Training exercises; assignments together with sample solutions
+
+server-config::
+Server configuration files required to successfully run the sample projects
+
+== Project setup
+
+The examples are running on Hibernate (as the JPA provider) and MySQL. Can be run on http://tomee.apache.org/[TomEE] as well as
+http://www.wildfly.org/[WildFly]. For both MySQL datasource must be configured (with mysql-connector-java jar being placed in the lib folder of the application server). Configuration files can be found in _server-config_ folder
+
+While OpenJPA is the default provider shipped with TomEE, additional configuration steps are needed to run TomEE with Hibernate - as described http://tomee.apache.org/tomee-and-hibernate.html[via official TomEE documentation]
