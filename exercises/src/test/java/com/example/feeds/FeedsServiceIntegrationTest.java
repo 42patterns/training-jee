@@ -1,5 +1,7 @@
 package com.example.feeds;
 
+import static com.example.feeds.model.Feed.*;
+import static com.example.feeds.model.Item.*;
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -8,16 +10,13 @@ import javax.ejb.EJB;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ArchivePath;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.example.feeds.FeedsService;
+import com.example.feeds.model.Feed;
 import com.sun.syndication.io.FeedException;
 
 @RunWith(Arquillian.class)
@@ -29,9 +28,10 @@ public class FeedsServiceIntegrationTest {
 				.resolve("rome:rome").withTransitivity()
 				.asFile();
 		
-		return ShrinkWrap.create(WebArchive.class)
+		return ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsLibraries(libs)
-				.addClass(FeedsService.class);				
+				.addPackage(Feed.class.getPackage())
+				.addClass(FeedsService.class);
 	}
 
 	@EJB
@@ -58,8 +58,20 @@ public class FeedsServiceIntegrationTest {
 "</channel>" +
 "</rss> ";
 		
-		String title = service.parseFeed(feeds);
-		assertEquals("W3Schools Home Page", title);		
+		Feed actual = service.parseFeed(feeds);
+		Feed expected = aFeed()
+				.withTitle("W3Schools Home Page")
+				.withLink("http://www.w3schools.com")
+				.addItems()
+					.item(anItem().withTitle("RSS Tutorial").withLink("http://www.w3schools.com/rss")
+							.withDescription("New RSS tutorial on W3Schools")
+							.build())
+					.item(anItem().withTitle("XML Tutorial").withLink("http://www.w3schools.com/xml")
+							.withDescription("New XML tutorial on W3Schools")
+							.build())
+					.end()
+				.build();
+		assertEquals(expected, actual);		
 
 	}
 	
