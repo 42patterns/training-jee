@@ -7,14 +7,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.example.feeds.model.Feed;
-import com.sun.syndication.io.FeedException;
 
 public class FeedsServiceTest {
 
 	FeedsService service = new FeedsService();
 	
 	@Test
-	public void shouldParseFeeds() throws IllegalArgumentException, FeedException {
+	public void shouldParseFeeds() {
 		final String feeds = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" +
 "<rss version=\"2.0\">" +
 "<channel>" +

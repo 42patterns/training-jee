@@ -17,7 +17,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.example.feeds.model.Feed;
-import com.sun.syndication.io.FeedException;
 
 @RunWith(Arquillian.class)
 public class FeedsServiceIntegrationTest {
@@ -38,7 +37,7 @@ public class FeedsServiceIntegrationTest {
 	FeedsService service;
 	
 	@Test
-	public void shouldReturnFeedName() throws IllegalArgumentException, FeedException {
+	public void shouldReturnFeedName() {
 		final String feeds = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" +
 "<rss version=\"2.0\">" +
 "<channel>" +

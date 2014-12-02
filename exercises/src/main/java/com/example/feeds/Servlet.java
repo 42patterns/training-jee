@@ -1,7 +1,6 @@
 package com.example.feeds;
 
 import java.io.IOException;
-import java.io.StringReader;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -11,9 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.feeds.model.Feed;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedInput;
 
 @WebServlet(urlPatterns = "/data")
 public class Servlet extends HttpServlet {
@@ -26,13 +22,8 @@ public class Servlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String raw_text = req.getParameter("feed-data");
-		try {			
-			Feed f = service.parseFeed(raw_text);
-			System.out.println(f.getTitle());
-		} catch (IllegalArgumentException | FeedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Feed f = service.parseFeed(raw_text);
+		System.out.println(f.getTitle());
 		
 		
 	}	

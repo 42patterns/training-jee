@@ -20,8 +20,9 @@ import com.sun.syndication.io.SyndFeedInput;
 public class FeedsService {
 
 	@SuppressWarnings("unchecked")
-	public Feed parseFeed(String feedData) throws IllegalArgumentException,
-			FeedException {
+	public Feed parseFeed(String feedData) {
+		
+		try {
 		SyndFeedInput input = new SyndFeedInput();
 		SyndFeed feed = input.build(new StringReader(feedData));
 
@@ -42,6 +43,10 @@ public class FeedsService {
 				.withLink(feed.getLink())
 				.withItems(items)
 				.build();
+		} catch (IllegalArgumentException | FeedException e) {
+			throw new ParsingException(e);
+		}
+
 	}
 
 }
