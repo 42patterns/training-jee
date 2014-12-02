@@ -7,10 +7,12 @@ import static org.junit.Assert.*;
 import java.io.File;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
@@ -30,11 +32,15 @@ public class FeedsServiceIntegrationTest {
 		return ShrinkWrap.create(WebArchive.class, "test.war")
 				.addAsLibraries(libs)
 				.addPackage(Feed.class.getPackage())
-				.addClass(FeedsService.class);
+				.addClasses(Storage.class, ParsingException.class, FeedsService.class)
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 
 	@EJB
 	FeedsService service;
+	
+	@Inject
+	Storage storage;
 	
 	@Test
 	public void shouldReturnFeedName() {
@@ -71,7 +77,7 @@ public class FeedsServiceIntegrationTest {
 					.end()
 				.build();
 		assertEquals(expected, actual);		
-
+		assertEquals(1, storage.get().size());
 	}
 	
 }

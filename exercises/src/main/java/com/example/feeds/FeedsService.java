@@ -7,6 +7,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.example.feeds.model.Feed;
@@ -19,30 +20,29 @@ import com.sun.syndication.io.SyndFeedInput;
 @Stateless
 public class FeedsService {
 
+	@EJB
+	Storage storage;
+
 	@SuppressWarnings("unchecked")
 	public Feed parseFeed(String feedData) {
-		
+
 		try {
-		SyndFeedInput input = new SyndFeedInput();
-		SyndFeed feed = input.build(new StringReader(feedData));
+			SyndFeedInput input = new SyndFeedInput();
+			SyndFeed syndFeed = input.build(new StringReader(feedData));
 
+			List<Item> items = new ArrayList<>();
+			List<SyndEntryImpl> entries = syndFeed.getEntries();
+			for (SyndEntryImpl e : entries) {
+				items.add(anItem().withTitle(e.getTitle())
+						.withLink(e.getLink()).withDate(e.getUpdatedDate())
+						.withDescription(e.getDescription().getValue()).build());
+			}
 
-		List<Item> items = new ArrayList<>();
-		List<SyndEntryImpl> entries = feed.getEntries();
-		for (SyndEntryImpl e: entries) {
-			items.add(anItem()
-				.withTitle(e.getTitle())
-				.withLink(e.getLink())
-				.withDate(e.getUpdatedDate())
-				.withDescription(e.getDescription().getValue())
-				.build());
-		}
-					
-		return aFeed()
-				.withTitle(feed.getTitle())
-				.withLink(feed.getLink())
-				.withItems(items)
-				.build();
+			Feed feed = aFeed().withTitle(syndFeed.getTitle())
+					.withLink(syndFeed.getLink()).withItems(items).build();
+
+			storage.add(feed);
+			return feed;
 		} catch (IllegalArgumentException | FeedException e) {
 			throw new ParsingException(e);
 		}
