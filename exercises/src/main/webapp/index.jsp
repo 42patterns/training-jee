@@ -1,9 +1,22 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<title>Submit your feeds</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
 <body>
+
+<c:if test="${feed != null}">
+Przesłano: <c:out value="${feed.title}"></c:out> <br/>
+<ul>
+	<c:forEach items="${feed.items}" var="item">
+	<li><c:out value="${item.title}"></c:out>
+	</c:forEach>
+</ul>
+</c:if>
 
 <form action="data" method="POST">
 	<textarea name="feed-data" cols="80" rows="20">
