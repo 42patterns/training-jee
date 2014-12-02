@@ -23,7 +23,8 @@ public class Servlet extends HttpServlet {
 		
 		String raw_text = req.getParameter("feed-data");
 		try {
-			service.parseFeed(raw_text);
+			String s = service.parseFeed(raw_text);
+			System.out.println(s);
 		} catch (IllegalArgumentException | FeedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

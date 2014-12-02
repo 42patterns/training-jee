@@ -11,11 +11,11 @@ import com.sun.syndication.io.SyndFeedInput;
 @Stateless
 public class FeedsService {
 
-	public void parseFeed(String feedData) throws IllegalArgumentException, FeedException {
+	public String parseFeed(String feedData) throws IllegalArgumentException, FeedException {
 		SyndFeedInput input = new SyndFeedInput();
 		SyndFeed feed = input.build(new StringReader(feedData));
 		
-		System.out.println("Feed title: " + feed.getTitle());
+		return feed.getTitle();
 	}
 	
 }
