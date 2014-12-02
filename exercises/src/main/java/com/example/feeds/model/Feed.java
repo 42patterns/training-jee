@@ -3,13 +3,33 @@ package com.example.feeds.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name="feeds")
 @XmlRootElement
+@NamedQuery(name = Feed.GET_ALL, query = "from Feed")
 public class Feed {
+	
+	final public static String GET_ALL = "Feed.GetAll";
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 	private String title;
 	private String link;
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="feed_id")
 	private List<Item> items;
 
 	public Feed() {

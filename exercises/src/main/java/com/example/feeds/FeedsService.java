@@ -7,8 +7,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 import com.example.feeds.model.Feed;
 import com.example.feeds.model.Item;
@@ -20,7 +20,7 @@ import com.sun.syndication.io.SyndFeedInput;
 @Stateless
 public class FeedsService {
 
-	@EJB
+	@Inject
 	Storage storage;
 
 	@SuppressWarnings("unchecked")

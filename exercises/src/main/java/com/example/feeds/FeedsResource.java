@@ -2,7 +2,9 @@ package com.example.feeds;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,12 +22,17 @@ public class FeedsResource {
 	@EJB
 	FeedsService parser;
 	
-	@EJB
+	@Inject
 	Storage storage;
+	
+	@PostConstruct
+	public void init() {
+		System.out.println(storage);
+	}
 	
 	@POST
 	public Response addFeed(String body) {
-		Feed feed = parser.parseFeed(body);
+		parser.parseFeed(body);
 		return Response.status(Status.CREATED).build();
 	}
 	
