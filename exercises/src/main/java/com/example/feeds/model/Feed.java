@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="feeds")
 @XmlRootElement
-@NamedQuery(name = Feed.GET_ALL, query = "from Feed")
+@NamedQuery(name = Feed.GET_ALL, query = "select f from Feed f")
 public class Feed {
 	
 	final public static String GET_ALL = "Feed.GetAll";

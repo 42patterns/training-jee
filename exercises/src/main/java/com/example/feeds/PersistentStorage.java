@@ -3,6 +3,7 @@ package com.example.feeds;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +16,7 @@ public class PersistentStorage implements Storage {
 	EntityManager em;
 	
 	@Override
+	@Interceptors(AuditInterceptor.class)
 	public boolean add(Feed f) {
 		em.persist(f);
 		em.flush();

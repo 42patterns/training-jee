@@ -18,4 +18,9 @@ create table items (
 	foreign key (feed_id) references feeds(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
-
+create table reports (
+	id int not null auto_increment primary key,
+	feed_title varchar(100),
+	items_cnt int,
+	create_date date	
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
