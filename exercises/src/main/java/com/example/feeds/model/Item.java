@@ -11,6 +11,8 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="items")
@@ -19,12 +21,18 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
+	@NotNull @Size(min = 10)
 	private String title;
+	
+	@NotNull @Size(min = 10)
 	private String link;
+	
 	@Lob
 	private String description;
+	
 	@Temporal(TemporalType.DATE)
-	@Column(name="create_date")
+	@Column(name="create_date")	
 	private Date date;
 
 	public Item() {

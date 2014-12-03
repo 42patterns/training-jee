@@ -15,9 +15,11 @@ public class PersistentStorage implements Storage {
 	EntityManager em;
 	
 	@Override
-	public void add(Feed f) {
+	public boolean add(Feed f) {
 		em.persist(f);
 		em.flush();
+		
+		return true;
 	}
 
 	@Override

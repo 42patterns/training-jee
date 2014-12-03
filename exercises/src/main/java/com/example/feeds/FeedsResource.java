@@ -1,10 +1,14 @@
 package com.example.feeds;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,10 +24,13 @@ import com.example.feeds.model.Feed;
 public class FeedsResource {
 
 	@EJB
-	FeedsService parser;
+	FeedsParser parser;
 	
 	@Inject
 	Storage storage;
+	
+	@Resource
+	Validator validator;
 	
 	@PostConstruct
 	public void init() {
@@ -32,8 +39,16 @@ public class FeedsResource {
 	
 	@POST
 	public Response addFeed(String body) {
-		parser.parseFeed(body);
-		return Response.status(Status.CREATED).build();
+		Feed feed = parser.parseFeed(body);
+		
+		Set<ConstraintViolation<Feed>> errors = validator.validate(feed);
+		
+		if (errors.isEmpty()) {
+			storage.add(feed);
+			return Response.status(Status.CREATED).build();
+		} else {
+			return Response.status(422).build();
+		}
 	}
 	
 	@GET

@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -26,10 +28,16 @@ public class Feed {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
+	@NotNull @Size(min = 10)
 	private String title;
+	
+	@NotNull @Size(min = 10)
 	private String link;
+	
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="feed_id")
+	@NotNull @Size(min = 1)
 	private List<Item> items;
 
 	public Feed() {

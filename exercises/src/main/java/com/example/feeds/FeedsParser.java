@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 import com.example.feeds.model.Feed;
 import com.example.feeds.model.Item;
@@ -18,10 +17,7 @@ import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 
 @Stateless
-public class FeedsService {
-
-	@Inject
-	Storage storage;
+public class FeedsParser {
 
 	@SuppressWarnings("unchecked")
 	public Feed parseFeed(String feedData) {
@@ -41,7 +37,6 @@ public class FeedsService {
 			Feed feed = aFeed().withTitle(syndFeed.getTitle())
 					.withLink(syndFeed.getLink()).withItems(items).build();
 
-			storage.add(feed);
 			return feed;
 		} catch (IllegalArgumentException | FeedException e) {
 			throw new ParsingException(e);

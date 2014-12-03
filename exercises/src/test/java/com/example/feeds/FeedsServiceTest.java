@@ -10,7 +10,7 @@ import com.example.feeds.model.Feed;
 
 public class FeedsServiceTest {
 
-	FeedsService service = new FeedsService();
+	FeedsParser service = new FeedsParser();
 	
 	@Test
 	public void shouldParseFeeds() {
