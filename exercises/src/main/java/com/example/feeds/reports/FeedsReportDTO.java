@@ -1,11 +1,12 @@
 package com.example.feeds.reports;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class FeedsReportDTO {
+public class FeedsReportDTO implements Serializable {
 
 	private String title;
 	private int itemsCount;
