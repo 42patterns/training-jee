@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tomee>
-  <!-- see http://tomee.apache.org/containers-and-resources.html -->
+	<!-- see http://tomee.apache.org/containers-and-resources.html -->
 
-  <!-- activate next line to be able to deploy applications in apps -->
-  <!-- <Deployments dir="apps" /> -->
+	<!-- activate next line to be able to deploy applications in apps -->
+	<!-- <Deployments dir="apps" /> -->
 
-  <Resource id="mysqlDatabase" type="javax.sql.DataSource">
-    #  MySQL example
-    #
-    #  This connector will not work until you download the driver at:
-    #  http://www.mysql.com/downloads/api-jdbc-stable.html
+	<Resource id="mysqlDatabase" type="javax.sql.DataSource">
+		# MySQL example
+		#
+		# This connector will not work until you download the driver at:
+		# http://www.mysql.com/downloads/api-jdbc-stable.html
 
-    JdbcDriver  com.mysql.jdbc.Driver
-    JdbcUrl jdbc:mysql://localhost/repository
-    UserName    root
-    Password    root
-  </Resource>
+		JdbcDriver com.mysql.jdbc.Driver
+		JdbcUrl jdbc:mysql://localhost/repository
+		UserName root
+		Password root
+	</Resource>
+
+	<Resource id="reportsDatabase" type="javax.sql.DataSource">
+		# MySQL example
+		#
+		# This connector will not work until you download the driver at:
+		# http://www.mysql.com/downloads/api-jdbc-stable.html
+
+		JdbcDriver com.mysql.jdbc.Driver
+		JdbcUrl jdbc:mysql://localhost/reports
+		UserName root
+		Password root
+	</Resource>
+
 </tomee>
