@@ -2,11 +2,17 @@
 
 This project contains sample projects for Java EE trainings
 
-jee6-example::
-Basic whole stack example: from database to a REST webservice endpoint
+book::
+JavaEE development script. Source of the trainings script prepared for http://www.devcastzone.com/course,tworzenie-aplikacji-z-uzyciem-ejb3[EJB3 online trainings]
 
 exercises::
 Training exercises; assignments together with sample solutions
+
+exercises-source::
+Initial project, starting kit for the exercises (including `pom.xml` and catalog structure)
+
+jee6-example::
+Basic whole stack example: from database to a REST webservice endpoint
 
 server-config::
 Server configuration files required to successfully run the sample projects
